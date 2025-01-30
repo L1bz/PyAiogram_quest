@@ -1,19 +1,17 @@
 import asyncio
-from aiogram import Bot, Dispatcher
-from aiogram.filters import CommandStart
-from aiogram.types import Message
-from config import TOKEN
 
+from aiogram import Bot, Dispatcher
+ 
+
+from config import TOKEN
+from app.handlers import router
 
 bot = Bot(token= TOKEN)
 dp = Dispatcher()
 
-@dp.message(CommandStart())
-async def cmd_start(message:Message):
-    await message.answer('asdf!')    
-
 
 async def main():
+    dp.include_router(router)
     await dp.start_polling(bot)
 
 if __name__ == '__main__':
@@ -21,6 +19,5 @@ if __name__ == '__main__':
         asyncio.run(main())
     except KeyboardInterrupt:
         print('Exit')
-    except RuntimeError:
-        print('exit')
+
 
